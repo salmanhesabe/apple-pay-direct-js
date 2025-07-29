@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+<!--    <script src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>-->
+<!--    <script type="text/javascript" src="https://cdn.rawgit.com/ricmoo/aes-js/e27b99df/index.js"></script>-->
+    <script src="HesabeCrypt.js"></script>
+    <script src="HesabeApplePay.js"></script>
+    <script>
+
+
+        const hesabeApplePay = new HesabeApplePay({
+            ivKey: '5NVdrlPVNnjo2Jy9',
+            secretKey: 'PkW64zMe5NVdrlPVNnjo2Jy9nOb7v1Xg',
+            accessCode: 'c333729b-d060-4b74-a49d-7686a8353481',
+            merchantCode: '842217',
+            merchantIdentifier: 'merchant.hesabe.dec',
+            amount: 10,
+            debug: true,
+            elements: {
+                applePayButtonContainer: 'apple-pay-container',
+                applePayButtonQuerySelector: '.applePaybtn'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="apple-pay-container" style="display: none;">
+    <button class="applePaybtn" style="display: none" data-paymenttype="9">Pay with Apple Pay</button>
+    <button class="applePaybtn" style="display: none" data-paymenttype="10">Pay with Apple Pay</button>
+    <button class="applePaybtn" style="display: none" data-paymenttype="11">Pay with Apple Pay</button>
+</div>
+</body>
+</html>

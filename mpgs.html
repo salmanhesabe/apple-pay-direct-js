@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MPGS Checkout Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    #payButton {
+      background-color: #0070ba;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #payButton:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Checkout with MPGS</h1>
+  <p>Click the button below to pay securely.</p>
+
+  <button id="payButton">Pay Now</button>
+
+  <!-- ✅ MPGS Checkout.js script (test environment) -->
+  <script src="https://nbkpayment.gateway.mastercard.com/static/checkout/checkout.min.js"
+          data-error="errorCallback"
+          data-cancel="cancelCallback"
+          data-complete="completeCallback">
+  </script>
+
+  <!-- ✅ Your main integration script -->
+  <script src="index.js"></script>
+
+  <!-- ✅ Optional: define callbacks -->
+  <script>
+    function errorCallback(error) {
+      console.error("Checkout error:", error);
+      alert("Something went wrong. Please try again.");
+    }
+
+    function cancelCallback() {
+      console.log("Payment was cancelled by the user.");
+      alert("Payment was cancelled.");
+    }
+
+    function completeCallback(resultIndicator, sessionVersion) {
+      console.log("Payment complete:", resultIndicator, sessionVersion);
+      // 👉 Call your backend to verify the resultIndicator
+      // 👉 Then redirect or show a success message
+      alert("Payment complete! Result: " + resultIndicator);
+    }
+  </script>
+</body>
+</html>
