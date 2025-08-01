@@ -45,7 +45,7 @@ class HesabeApplePay {
             availablePaymentGateways: [],
             elements: {
                 applePayButtonContainer: 'applePayment',
-                applePayButtonQuerySelector: '.applePaybtn'
+                applePayButtonQuerySelector: '.applePayBtn'
             },
             ...config
         };
