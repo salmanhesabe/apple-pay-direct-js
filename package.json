@@ -1,0 +1,44 @@
+{
+  "name": "hesabe-apple-pay",
+  "version": "1.0.0",
+  "description": "Apple Pay integration library for Hesabe payment gateway",
+  "main": "dist/hesabe-apple-pay.js",
+  "module": "dist/hesabe-apple-pay.esm.js",
+  "browser": "dist/hesabe-apple-pay.umd.js",
+  "unpkg": "cdn/hesabe-apple-pay.min.js",
+  "jsdelivr": "cdn/hesabe-apple-pay.min.js",
+  "files": [
+    "dist/",
+    "cdn/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "node_modules/.bin/rollup -c",
+    "build:dev": "node_modules/.bin/rollup -c --environment NODE_ENV:development",
+    "build:prod": "node_modules/.bin/rollup -c --environment NODE_ENV:production",
+    "clean": "rm -rf dist cdn",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "apple-pay",
+    "payment",
+    "hesabe",
+    "javascript",
+    "umd",
+    "browser"
+  ],
+  "author": "Salman Ulfaris",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/hesabe-apple-pay.git"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.9.6"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
