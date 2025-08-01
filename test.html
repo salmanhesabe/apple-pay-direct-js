@@ -110,104 +110,49 @@
         <div class="spinner"></div>
         <p>Processing payment...</p>
     </div>
-
     <!-- Test with source file -->
     <script src="src/HesabeApplePay.js"></script>
-    
+
     <script>
-        // Mock Apple Pay for testing (remove in production)
-        if (!window.ApplePaySession) {
-            window.ApplePaySession = class {
-                static canMakePaymentsWithActiveCard() {
-                    return Promise.resolve(true);
-                }
-                
-                constructor(version, request) {
-                    this.version = version;
-                    this.request = request;
-                    console.log('Mock ApplePaySession created:', { version, request });
-                }
-                
-                begin() {
-                    console.log('Mock payment session started');
-                    // Simulate merchant validation after 1 second
-                    setTimeout(() => {
-                        if (this.onvalidatemerchant) {
-                            this.onvalidatemerchant({
-                                validationURL: 'https://apple-pay-gateway-cert.apple.com/paymentservices/startSession'
-                            });
-                        }
-                    }, 1000);
-                }
-                
-                completeMerchantValidation(session) {
-                    console.log('Mock merchant validation completed:', session);
-                    // Simulate payment authorization after 1 second
-                    setTimeout(() => {
-                        if (this.onpaymentauthorized) {
-                            this.onpaymentauthorized({
-                                payment: {
-                                    token: {
-                                        paymentData: { test: 'data' },
-                                        paymentMethod: { type: 'debit' },
-                                        transactionIdentifier: 'TEST123'
-                                    }
-                                }
-                            });
-                        }
-                    }, 1000);
-                }
-                
-                completePayment(status) {
-                    console.log('Mock payment completed with status:', status);
-                }
-                
-                abort() {
-                    console.log('Mock payment aborted');
-                }
-                
-                static get STATUS_SUCCESS() { return 0; }
-                static get STATUS_FAILURE() { return 1; }
-            };
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Apple Pay after DOM is loaded
+            try {
+                const hesabeApplePay = new HesabeApplePay({
+                    token: 'test-token-123',
+                    requestData: 'test-encrypted-data',
+                    amount: '10.000',
+                    availablePaymentGateways: [9, 10, 11, 12],
+                    countryCode: 'KW',
+                    env: 'sandbox',
+                    currencyCode: 'KWD',
+                    debug: true
+                });
 
-        // Initialize Apple Pay
-        try {
-            const hesabeApplePay = new HesabeApplePay({
-                token: 'test-token-123',
-                requestData: 'test-encrypted-data',
-                amount: '10.000',
-                availablePaymentGateways: [9, 10, 11, 12],
-                countryCode: 'KW',
-                env: 'sandbox', // Auto-sets merchantCode, merchantIdentifier, and URLs
-                currencyCode: 'KWD',
-                debug: true
-            });
+                // Initialize Apple Pay
+                hesabeApplePay.init();
 
-            // Initialize Apple Pay
-            hesabeApplePay.init();
+                // Mock fetch for validation and payment
+                const originalFetch = window.fetch;
+                window.fetch = function(url, options) {
+                    console.log('Mock fetch called:', url);
+                    
+                    if (url.includes('apple-validation')) {
+                        return Promise.resolve({
+                            ok: true,
+                            json: () => Promise.resolve({ mockSession: 'validated' })
+                        });
+                    }
+                    
+                    return originalFetch.apply(this, arguments);
+                };
 
-            // Mock fetch for validation and payment
-            const originalFetch = window.fetch;
-            window.fetch = function(url, options) {
-                console.log('Mock fetch called:', url);
+                document.getElementById('status').innerHTML = 'Apple Pay initialized successfully! ✅';
                 
-                if (url.includes('apple-validation')) {
-                    return Promise.resolve({
-                        ok: true,
-                        json: () => Promise.resolve({ mockSession: 'validated' })
-                    });
-                }
-                
-                return originalFetch.apply(this, arguments);
-            };
-
-            document.getElementById('status').innerHTML = 'Apple Pay initialized successfully! ✅';
-            
-        } catch (error) {
-            console.error('Initialization failed:', error);
-            document.getElementById('status').innerHTML = `❌ Error: ${error.message}`;
-        }
+            } catch (error) {
+                console.error('Initialization failed:', error);
+                document.getElementById('status').innerHTML = `❌ Error: ${error.message}`;
+            }
+        });
     </script>
 </body>
 </html>

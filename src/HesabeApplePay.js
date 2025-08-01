@@ -5,8 +5,8 @@
 
 class HesabeApplePay {
     static PAYMENT_TYPES = {
-        STANDARD: 9,
-        KNET_DEBIT: 11,
+        MPGS_APPLE_PAY: 9,
+        CYBERSOURCE_APPLE_PAY: 11,
         KNET_CREDIT: 12,
         VISA: 10
     };
@@ -93,16 +93,47 @@ class HesabeApplePay {
     }
 
     #initialize() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.#setupApplePay());
-        } else {
-            this.#setupApplePay();
-        }
+        // Load Apple Pay SDK first if not already loaded
+        this.#loadApplePaySDK().then(() => {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => this.#setupApplePay());
+            } else {
+                this.#setupApplePay();
+            }
+        });
+    }
+
+    #loadApplePaySDK() {
+        return new Promise((resolve) => {
+            // Check if Apple Pay SDK is already loaded
+            if (window.ApplePaySession) {
+                resolve();
+                return;
+            }
+
+            // Check if script is already being loaded
+            const existingScript = document.querySelector('script[src*="apple-pay-sdk.js"]');
+            if (existingScript) {
+                existingScript.onload = resolve;
+                return;
+            }
+
+            // Create and inject Apple Pay SDK script
+            const script = document.createElement('script');
+            script.src = 'https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js';
+            script.onload = resolve;
+            script.onerror = () => {
+                this.#log('Failed to load Apple Pay SDK');
+                resolve(); // Continue anyway
+            };
+            
+            document.head.appendChild(script);
+        });
     }
 
     #setupApplePay() {
         if (!window.ApplePaySession) {
-            this.#log('Apple Pay not available in this browser');
+            this.#log('ApplePaySession not available in this browser');
             return;
         }
 
@@ -124,7 +155,7 @@ class HesabeApplePay {
 
     async #initializeApplePay() {
         try {
-            const canPay = await ApplePaySession.canMakePaymentsWithActiveCard(this.#config.merchantIdentifier);
+            const canPay = await ApplePaySession.applePayCapabilities(this.#config.merchantIdentifier);
 
             if (!canPay) {
                 this.#log('Apple Pay available in browser, but merchant not activated for domain');
@@ -143,7 +174,7 @@ class HesabeApplePay {
             countryCode: this.#config.countryCode,
             currencyCode: this.#config.currencyCode,
             total: {
-                label: this.#config.merchantCode || 'Hesabe Payment',
+                label: this.#config.merchantCode || 'Payment',
                 type: 'final',
                 amount: this.#config.amount
             }
@@ -170,7 +201,7 @@ class HesabeApplePay {
 
     async #processPayment(paymentType) {
         const paymentRequest = this.#createPaymentRequest(paymentType);
-        const session = new ApplePaySession(4, paymentRequest);
+        const session = new ApplePaySession(5, paymentRequest);
 
         // Merchant validation
         session.onvalidatemerchant = async (event) => {
