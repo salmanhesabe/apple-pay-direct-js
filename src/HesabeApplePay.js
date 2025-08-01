@@ -53,7 +53,7 @@ class HesabeApplePay {
         // Set internal merchantIdentifier based on the environment
         baseConfig.merchantIdentifier = baseConfig.env === 'production'
             ? 'merchant.hesabe.prod'
-            : 'merchant.hesabe.dev';
+            : 'merchant.hesabe.dec';
 
 
         // Generate sessionId if not provided
@@ -126,7 +126,7 @@ class HesabeApplePay {
                 this.#log('Failed to load Apple Pay SDK');
                 resolve(); // Continue anyway
             };
-            
+
             document.head.appendChild(script);
         });
     }

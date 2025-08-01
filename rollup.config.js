@@ -57,8 +57,7 @@ export default [
       terser({
         compress: {
           drop_console: false,
-          drop_debugger: true,
-          pure_funcs: ['console.log']
+          drop_debugger: true
         },
         format: {
           comments: /^!/

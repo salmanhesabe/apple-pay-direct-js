@@ -127,24 +127,9 @@
                     currencyCode: 'KWD',
                     debug: true
                 });
-
+                console.log(hesabeApplePay)
                 // Initialize Apple Pay
                 hesabeApplePay.init();
-
-                // Mock fetch for validation and payment
-                const originalFetch = window.fetch;
-                window.fetch = function(url, options) {
-                    console.log('Mock fetch called:', url);
-                    
-                    if (url.includes('apple-validation')) {
-                        return Promise.resolve({
-                            ok: true,
-                            json: () => Promise.resolve({ mockSession: 'validated' })
-                        });
-                    }
-                    
-                    return originalFetch.apply(this, arguments);
-                };
 
                 document.getElementById('status').innerHTML = 'Apple Pay initialized successfully! ✅';
                 
