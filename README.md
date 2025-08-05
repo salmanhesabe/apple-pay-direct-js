@@ -14,7 +14,7 @@ npm i @hesabe-pay/direct-apple-pay
 
 ```html
 
-<script src="https://unpkg.com/@hesabe-pay/direct-apple-pay@1.0.0/dist/hesabe-apple-pay.js"></script>
+<script src="https://unpkg.com/@hesabe-pay/direct-apple-pay@latest/cdn/hesabe-apple-pay.min.js"></script>
 ```
 
 ## Usage
@@ -64,9 +64,8 @@ payment.init();
 ### Browser (UMD)
 
 ```html
-
 <head>
-   <script src="https://unpkg.com/@hesabe-pay/direct-apple-pay@1.0.0/dist/hesabe-apple-pay.js"></script>
+   <script src="https://unpkg.com/@hesabe-pay/direct-apple-pay@latest/cdn/hesabe-apple-pay.min.js"></script>
 </head>
 <body>
 <div class="applePayButtonContainer">
