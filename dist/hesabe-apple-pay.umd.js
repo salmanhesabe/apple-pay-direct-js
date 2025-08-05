@@ -1,7 +1,7 @@
 /*!
  * Hesabe Apple Pay v1.0.0
  * Apple Pay integration library for Hesabe payment gateway
- * (c) 2025 Salman Ulfaris
+ * (c) 2025 Hesabe IT Team
  * Released under the MIT License.
  */
 (function (global, factory) {
