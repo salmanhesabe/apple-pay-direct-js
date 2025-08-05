@@ -28,7 +28,8 @@ class HesabeApplePay {
         this.#internalConfig = {
             routes: {
                 appleValidation: this.#getBaseUrl() + '/transaction/apple',
-                payment: this.#getBaseUrl() + '/payment'
+                payment: this.#getBaseUrl() + '/payment',
+                enquiry: this.#getBaseUrl() + '/payment/api/transaction/enquire'
             },
             token: this.#config.token
         };
@@ -46,6 +47,8 @@ class HesabeApplePay {
             token: '',
             requestData: '',
             availablePaymentGateways: [],
+            paymentAttemptedCallback: null,
+            paymentCancelledCallback: null,
             elements: {
                 applePayButtonQuerySelector: '.applePayBtn'
             },
@@ -239,6 +242,9 @@ class HesabeApplePay {
         // Payment cancellation
         session.oncancel = (event) => {
             this.#log('Apple Pay cancelled', event);
+            if (this.#config.paymentCancelledCallback) {
+                this.#config.paymentCancelledCallback();
+            }
         };
 
         session.begin();
@@ -285,8 +291,7 @@ class HesabeApplePay {
     /**
      * Handle Apple Pay payment authorization
      */
-    #handleApplePayAuthorization(payment, paymentType, session) {
-
+    async #handleApplePayAuthorization(payment, paymentType, session) {
         try {
             const paymentParams = new URLSearchParams({
                 token: this.#internalConfig.token,
@@ -301,10 +306,39 @@ class HesabeApplePay {
             const paymentUrl = `${this.#internalConfig.routes.payment}?${paymentParams.toString()}`;
 
             session.completePayment(ApplePaySession.STATUS_SUCCESS);
-            location.href = paymentUrl;
+
+            if (this.#config.paymentAttemptedCallback) {
+                try {
+                    const response = await fetch(paymentUrl);
+                    const result = await response.text();
+
+                    // Always call enquiry API regardless of payment response status
+                    const enquiryUrl = `${this.#internalConfig.routes.enquiry}/${this.#internalConfig.token}`;
+                    const enquiryResponse = await fetch(enquiryUrl);
+                    const enquiryData = await enquiryResponse.json();
+
+                    // Determine success based on transaction status from enquiry data
+                    const transactionStatus = enquiryData?.data?.data?.[0]?.status;
+                    const isSuccess = transactionStatus && transactionStatus.toUpperCase() == 'SUCCESSFUL';
+
+                    this.#config.paymentAttemptedCallback({
+                        success: isSuccess,
+                        data: enquiryData
+                    });
+                } catch (fetchError) {
+                    this.#log('Payment callback failed:', fetchError);
+                    this.#config.paymentAttemptedCallback({success: false, message: fetchError.message, data: null});
+                }
+            } else {
+                location.href = paymentUrl;
+            }
         } catch (error) {
             this.#log('Payment processing failed:', error);
             session.completePayment(ApplePaySession.STATUS_FAILURE);
+
+            if (this.#config.paymentAttemptedCallback) {
+                this.#config.paymentAttemptedCallback({success: false, error: error.message});
+            }
         }
     }
 

@@ -1,21 +1,23 @@
 {
   "name": "@hesabe-pay/direct-apple-pay",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Apple Pay integration library for Hesabe payment gateway",
   "main": "index.js",
   "module": "dist/hesabe-apple-pay.esm.js",
+  "types": "index.d.ts",
   "browser": "dist/hesabe-apple-pay.umd.js",
   "unpkg": "cdn/hesabe-apple-pay.min.js",
   "jsdelivr": "cdn/hesabe-apple-pay.min.js",
   "files": [
     "dist/",
     "cdn/",
-    "src/"
+    "index.d.ts"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "build:dev": "rollup -c --environment NODE_ENV:development",
-    "build:prod": "rollup -c --environment NODE_ENV:production",
+    "build": "rollup -c && node scripts/build-types.js",
+    "build:dev": "rollup -c --environment NODE_ENV:development && node scripts/build-types.js",
+    "build:prod": "rollup -c --environment NODE_ENV:production && node scripts/build-types.js",
+    "build:types": "node scripts/build-types.js",
     "clean": "rimraf dist cdn",
     "prepublishOnly": "npm run clean && npm run build",
     "publish": "npm publish"
