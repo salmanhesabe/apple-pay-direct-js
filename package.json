@@ -4,13 +4,15 @@
   "description": "Apple Pay integration library for Hesabe payment gateway",
   "main": "index.js",
   "module": "dist/hesabe-apple-pay.esm.js",
+  "types": "index.d.ts",
   "browser": "dist/hesabe-apple-pay.umd.js",
   "unpkg": "cdn/hesabe-apple-pay.min.js",
   "jsdelivr": "cdn/hesabe-apple-pay.min.js",
   "files": [
     "dist/",
     "cdn/",
-    "src/"
+    "src/",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rollup -c",

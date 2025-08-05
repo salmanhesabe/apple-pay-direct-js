@@ -24,9 +24,8 @@ npm i @hesabe-pay/direct-apple-pay
 1. Request Checkout API in Hesabe (Follow the normal steps)
 2. In response, you will get `token` and `data`, pass it as `token` and `requestData` respectively in the
    `HesabeApplePay` constructor.
-3. Pass the Apple Pay container element ID in html as `config.elements.applePayButtonContainer`
-4. Pass the Apple Pay button selector (eg: `.apple-pay-button`) `config.elements.applePayButtonQuerySelector`
-5. After all the required parameters are set, call the `init()` method to initialize Apple Pay.
+3. Pass the Apple Pay button selector (eg: `.apple-pay-button`) `config.elements.applePayButtonQuerySelector`
+4. After all the required parameters are set, call the `init()` method to initialize Apple Pay.
 
 
 
@@ -37,13 +36,11 @@ npm i @hesabe-pay/direct-apple-pay
 <head>
    <script src="https://unpkg.com/@hesabe-pay/direct-apple-pay@latest/cdn/hesabe-apple-pay.min.js"></script>
 </head>
-<body>
-<div id="applePayButtonContainer">
-   <button class="apple-pay-button" data-paymenttype="9">
-      Apple Pay
-   </button>
-</div>
-</body>
+   <body>
+      <button class="apple-pay-button" data-paymenttype="9">
+         Apple Pay
+      </button>
+   </body>
 <script>
 
    const config = {
@@ -56,7 +53,6 @@ npm i @hesabe-pay/direct-apple-pay
       env: 'sandbox',
       debug: true,
       elements: {
-         applePayButtonContainerId: 'applePayButtonContainer',
          applePayButtonQuerySelector: '.apple-pay-button'
       }
    }
@@ -80,7 +76,6 @@ const config = {
     countryCode: 'KW',
     env: 'sandbox',
     elements: {
-        applePayButtonContainerId: 'applePayButtonContainer',
         applePayButtonQuerySelector: '.apple-pay-button'
     },
     currencyCode: 'KWD'
@@ -94,13 +89,11 @@ payment.init();
 #### HTML : Design your Apple Pay button
 ```html
 <!--HTML Part-->
-<!-- Design your apple button with attribute data-paymenttype -->
+<!-- Design your apple button with attribute data-paymenttype and class -->
 <body>
-   <div id="applePayButtonContainer">
       <button class="apple-pay-button" data-paymenttype="9">
          Apple Pay
       </button>
-   </div>
 </body>
 ```
 ---
@@ -108,17 +101,17 @@ payment.init();
 
 ## Configuration
 
-| Option                     | Type    | Required | Description                                           |
-|----------------------------|---------|----------|-------------------------------------------------------|
-| `token`                    | string  | ✓        | Authentication token                                  |
-| `requestData`              | string  | ✓        | Encrypted payment data                                |
-| `amount`                   | string  | ✓        | Payment amount                                        |
-| `availablePaymentGateways` | array   | ✓        | Available payment gateway IDs,[Types](#payment-types) |
-| `countryCode`              | string  |          | Country code. default 'KW'                            |
-| `env`                      | string  | ✓        | Environment: 'sandbox' or 'production'                |
-| `currencyCode`             | string  |          | Currency code. default 'KWD'                          |
-| `debug`                    | boolean |          | Enable debug logging (default: false)                 |
-| `elements`                 | object  |          | DOM element configuration for Apple Pay buttons       |
+| Option                       | Type    | Required | Description                                           |
+|------------------------------|---------|----------|-------------------------------------------------------|
+| `token`                    a | string  | ✓        | Authentication token                                  |
+| `requestData`                | string  | ✓        | Encrypted payment data                                |
+| `amount`                     | string  | ✓        | Payment amount                                        |
+| `availablePaymentGateways`   | array   | ✓        | Available payment gateway IDs,[Types](#payment-types) |
+| `countryCode`                | string  |          | Country code. default 'KW'                            |
+| `env`                        | string  | ✓        | Environment: 'sandbox' or 'production'                |
+| `currencyCode`               | string  |          | Currency code. default 'KWD'                          |
+| `debug`                      | boolean |          | Enable debug logging (default: false)                 |
+| `elements`                   | object  |          | DOM element configuration for Apple Pay buttons       |
 
 ### Elements Configuration
 
@@ -126,13 +119,12 @@ The `elements` object configures how the library interacts with your DOM element
 
 ```javascript
 elements: {
-    applePayButtonContainerId: 'applePayButtonContainer',  // ID of container element
     applePayButtonQuerySelector: '.apple-pay-button'      // CSS selector for buttons
 }
 ```
 
-- `applePayButtonContainerId`: The ID of the HTML element that contains your Apple Pay buttons
-- `applePayButtonQuerySelector`: CSS selector to find Apple Pay buttons within the container
+
+- `applePayButtonQuerySelector`: CSS selector to find Apple Pay buttons
 
 **Testing Environment:**
 - Make sure enviroment is set to `sandbox` for testing purposes.
