@@ -31,10 +31,6 @@
   ],
   "author": "salmanhesabe",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/salmanhesabe/apple-pay-direct-js.git"
-  },
   "publishConfig": {
     "access": "public"
   },
