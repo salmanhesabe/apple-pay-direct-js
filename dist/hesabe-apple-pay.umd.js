@@ -77,7 +77,7 @@
         #getBaseUrl() {
             return this.#config.env === 'production'
                 ? 'https://api.hesabe.com'
-                : 'https://sandbox.hesabe.com';
+                : 'https://dev-paymentapi.hesabe.com';
         }
 
         #generateSessionId() {
@@ -139,7 +139,7 @@
                     resolve(); // Continue anyway
                 };
 
-                document.head.appendChild(script);
+                (document.head || document.body || document.documentElement).appendChild(script);
             });
         }
 
@@ -335,10 +335,14 @@
          * This is the only method that should be called by merchants
          */
         init() {
-            console.log("Hi,init entered");
             this.#initialize();
             return this;
         }
+    }
+
+    // Make available globally for browser usage
+    if (typeof window !== 'undefined') {
+        window.HesabeApplePay = HesabeApplePay;
     }
 
     return HesabeApplePay;

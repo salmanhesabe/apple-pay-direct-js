@@ -13,21 +13,22 @@
     "src/"
   ],
   "scripts": {
-    "build": "node_modules/.bin/rollup -c",
-    "build:dev": "node_modules/.bin/rollup -c --environment NODE_ENV:development",
-    "build:prod": "node_modules/.bin/rollup -c --environment NODE_ENV:production",
-    "clean": "rm -rf dist cdn",
+    "build": "rollup -c",
+    "build:dev": "rollup -c --environment NODE_ENV:development",
+    "build:prod": "rollup -c --environment NODE_ENV:production",
+    "clean": "rimraf dist cdn",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
     "apple-pay",
+    "apple-pay-direct",
     "payment",
     "hesabe",
     "javascript",
     "umd",
     "browser"
   ],
-  "author": "Salman Ulfaris",
+  "author": "salmanhesabe",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
   "type": "module",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
+    "rimraf": "^3.0.2",
     "rollup": "^4.9.6"
   },
   "engines": {
