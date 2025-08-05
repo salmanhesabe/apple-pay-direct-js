@@ -317,17 +317,10 @@ class HesabeApplePay {
                     const enquiryResponse = await fetch(enquiryUrl);
                     const enquiryData = await enquiryResponse.json();
 
-                    // Determine success based on transaction status from enquiry data
-                    const transactionStatus = enquiryData?.data?.data?.[0]?.status;
-                    const isSuccess = transactionStatus && transactionStatus.toUpperCase() == 'SUCCESSFUL';
-
-                    this.#config.paymentAttemptedCallback({
-                        success: isSuccess,
-                        data: enquiryData
-                    });
+                    this.#config.paymentAttemptedCallback(enquiryData);
                 } catch (fetchError) {
                     this.#log('Payment callback failed:', fetchError);
-                    this.#config.paymentAttemptedCallback({success: false, message: fetchError.message, data: null});
+                    this.#config.paymentAttemptedCallback({status: false, message: fetchError.message, data: null});
                 }
             } else {
                 location.href = paymentUrl;
@@ -337,7 +330,7 @@ class HesabeApplePay {
             session.completePayment(ApplePaySession.STATUS_FAILURE);
 
             if (this.#config.paymentAttemptedCallback) {
-                this.#config.paymentAttemptedCallback({success: false, error: error.message});
+                this.#config.paymentAttemptedCallback({status: false, message: error.message});
             }
         }
     }

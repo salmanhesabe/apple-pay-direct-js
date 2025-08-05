@@ -27,9 +27,6 @@ npm i @hesabe-pay/direct-apple-pay
 3. Pass the Apple Pay button selector (eg: `.apple-pay-button`) `config.elements.applePayButtonQuerySelector`
 4. After all the required parameters are set, call the `init()` method to initialize Apple Pay.
 
-
-
-
 ### CDN
 
 ```html
@@ -67,27 +64,31 @@ npm i @hesabe-pay/direct-apple-pay
     payment.init();
 </script>
 ```
+
 ---
 
 ### ES Modules
 
 #### JS Section : Initialize Hesabe Apple Pay
+
 ```javascript
 import HesabeApplePay from '@hesabe-pay/direct-apple-pay';
 
 const config = {
-       token: 'token',
-       requestData: 'encrypted-data',
-       amount: '10.00',
-       availablePaymentGateways: [9],
-       countryCode: 'KW',
-       env: 'sandbox',
-       elements: {
-           applePayButtonQuerySelector: '.apple-pay-button'
-       },
-       currencyCode: 'KWD',
-       paymentAttemptedCallback: (result) => {}, // If we want to handle payment completion without redirection, for redirect no need pass this callback or keep it null
-       paymentCancelledCallback: () => {} // Optional callback for Apple Pay cancellation
+    token: 'token',
+    requestData: 'encrypted-data',
+    amount: '10.00',
+    availablePaymentGateways: [9],
+    countryCode: 'KW',
+    env: 'sandbox',
+    elements: {
+        applePayButtonQuerySelector: '.apple-pay-button'
+    },
+    currencyCode: 'KWD',
+    paymentAttemptedCallback: (result) => {
+    }, // If we want to handle payment completion without redirection, for redirect no need pass this callback or keep it null
+    paymentCancelledCallback: () => {
+    } // Optional callback for Apple Pay cancellation
 }
 
 const payment = new HesabeApplePay(config);
@@ -95,34 +96,36 @@ const payment = new HesabeApplePay(config);
 // Call init when it is ready check browser compatibility and show the buttons 
 payment.init();
 ```
+
 #### HTML Section : Design your Apple Pay button
+
 ```html
 <!--HTML Part-->
 <!-- Design your apple button with attribute data-paymenttype and class -->
 <body>
-      <button class="apple-pay-button" data-paymenttype="9">
-         Apple Pay
-      </button>
+<button class="apple-pay-button" data-paymenttype="9">
+    Apple Pay
+</button>
 </body>
 ```
----
 
+---
 
 ## Configuration
 
-| Option                      | Type    | Required | Description                                           |
-|-----------------------------|---------|----------|-------------------------------------------------------|
-| `token`                     | string  | ✓        | Authentication token                                  |
-| `requestData`               | string  | ✓        | Encrypted payment data                                |
-| `amount`                    | string  | ✓        | Payment amount                                        |
-| `availablePaymentGateways`  | array   | ✓        | Available payment gateway IDs,[Types](#payment-types) |
-| `countryCode`               | string  |          | Country code. default 'KW'                            |
-| `env`                       | string  | ✓        | Environment: 'sandbox' or 'production'                |
-| `currencyCode`              | string  |          | Currency code. default 'KWD'                          |
-| `debug`                     | boolean |          | Enable debug logging (default: false)                 |
-| `paymentAttemptedCallback`  | function|          | Optional callback function for payment completion      |
-| `paymentCancelledCallback`  | function|          | Optional callback function for payment cancellation    |
-| `elements`                  | object  |          | DOM element configuration for Apple Pay buttons       |
+| Option                     | Type     | Required | Description                                                                      |
+|----------------------------|----------|----------|----------------------------------------------------------------------------------|
+| `token`                    | string   | ✓        | Authentication token                                                             |
+| `requestData`              | string   | ✓        | Encrypted payment data                                                           |
+| `amount`                   | string   | ✓        | Payment amount                                                                   |
+| `availablePaymentGateways` | array    | ✓        | List of available payment gateway IDs. See [Types](#payment-types-for-apple-pay) |
+| `countryCode`              | string   |          | Country code (default: `'KW'`)                                                   |
+| `env`                      | string   | ✓        | Environment: `'sandbox'` or `'production'`                                       |
+| `currencyCode`             | string   |          | Currency code (default: `'KWD'`)                                                 |
+| `debug`                    | boolean  |          | Enable debug logging (default: `false`)                                          |
+| `paymentAttemptedCallback` | function |          | Optional callback for successful payment. Not required if redirection is used    |
+| `paymentCancelledCallback` | function |          | Optional callback for payment cancellation                                       |
+| `elements`                 | object   |          | DOM element configuration for Apple Pay buttons                                  |
 
 ### Elements Configuration
 
@@ -133,7 +136,6 @@ elements: {
     applePayButtonQuerySelector: '.apple-pay-button'      // CSS selector for buttons
 }
 ```
-
 
 - `applePayButtonQuerySelector`: CSS selector to find Apple Pay buttons
 
@@ -154,15 +156,12 @@ paymentAttemptedCallback: (result) => {
 }
 ```
 
-**Callback Response Format:**
-- `success`: Boolean indicating payment transaction success/failure
-- `data`: Transaction details from the enquiry API
-- `error`: Error message (when any technical occurs)
-
 **Enquiry API Response Examples:**
 
 ### `result` in `paymentAttemptedCallback`
+
 **Successful Transaction:**
+
 ```json
 {
   "status": true,
@@ -170,17 +169,17 @@ paymentAttemptedCallback: (result) => {
   "data": {
     "data": [
       {
-        "token": "10487173933928293396853",
+        "token": "<TOKEN>",
         "amount": "9.000",
-        "reference_number": "104877892956",
+        "reference_number": "<REFERENCE_NUMBER>",
         "status": "SUCCESSFUL",
-        "TransactionID": "504657004599619",
-        "Id": 18710759,
-        "PaymentID": "102504611000169989",
-        "Terminal": "530801",
-        "TrackID": "18464809",
-        "payment_type": "KNET",
-        "service_type": "SMS Payment",
+        "TransactionID": "<TRANSACTION_ID>",
+        "Id": "<ID>",
+        "PaymentID": "<PAYMENT_ID>",
+        "Terminal": "<TERMINAL_ID>",
+        "TrackID": "<TRACK_ID>",
+        "payment_type": "<TYPE_NAME>",
+        "service_type": "<SERVICE_TYPE>",
         "customerName": "",
         "customerEmail": "",
         "customerMobile": "",
@@ -194,6 +193,7 @@ paymentAttemptedCallback: (result) => {
 ```
 
 **Failed Transaction:**
+
 ```json
 {
   "status": true,
@@ -201,17 +201,17 @@ paymentAttemptedCallback: (result) => {
   "data": {
     "data": [
       {
-        "token": "84221717513802249458878535138",
+        "token": "<TOKEN>",
         "amount": "33.000",
-        "reference_number": "1751380220",
+        "reference_number": "<REFERENCE_NUMBER>",
         "status": "FAILED",
-        "TransactionID": "27289",
-        "Id": 130431,
-        "PaymentID": "17",
-        "Terminal": "99999999",
-        "TrackID": "27289",
-        "payment_type": "DEEMA",
-        "service_type": "Payment Gateway",
+        "TransactionID": "<TRANSACTION_ID>",
+        "Id": "<ID>",
+        "PaymentID": "<PAYMENT_ID>",
+        "Terminal": "<TERMINAL_ID>",
+        "TrackID": "<TRACK_ID>",
+        "payment_type": "<TYPE_NAME>",
+        "service_type": "<SERVICE_TYPE>",
         "customerName": null,
         "customerEmail": null,
         "customerMobile": null,
@@ -225,6 +225,7 @@ paymentAttemptedCallback: (result) => {
 ```
 
 **Transaction Not Found:**
+
 ```json
 {
   "status": false,
@@ -233,65 +234,30 @@ paymentAttemptedCallback: (result) => {
 }
 ```
 
-**Handling Result Data:**
-```javascript
-paymentAttemptedCallback: (result) => {
-    if (result.success) {
-        // Payment was successful
-        console.log('Payment successful:', result.data);
-        // Access transaction details: result.data.data.data[0]
-        const transaction = result.data.data.data[0];
-        console.log('Transaction ID:', transaction.TransactionID);
-        console.log('Amount:', transaction.amount);
-        console.log('Reference Number:', transaction.reference_number);
-        console.log('Payment Type:', transaction.payment_type);
-        console.log('Date/Time:', transaction.datetime);
-    } else {
-        // Payment failed
-        console.log('Payment failed:', result.data);
-        // Handle failed transaction or API errors
-        if (result.data && result.data.data) {
-            const transaction = result.data.data.data[0];
-            console.log('Failed Transaction ID:', transaction.TransactionID);
-            console.log('Failed Amount:', transaction.amount);
-            console.log('Failure Reason:', transaction.status);
-        } else if (result.data && !result.data.status) {
-            console.log('Transaction not found:', result.data.message);
-        }
-    }
+**Error Occured:**
+
+```json
+{
+  "status": false,
+  "message": "<error_message>"
 }
 ```
 
 ### Payment Cancellation Callback
 
-You can also provide an optional callback function to handle when users cancel the payment:
+This callback is triggered when the user cancels the Apple Pay session before completing the payment.
 
 ```javascript
-paymentCancelledCallback: () => {
+config.paymentCancelledCallback = () => {
     console.log('User cancelled the payment');
     // Handle cancellation logic here
 }
 ```
 
-This callback is triggered when the user cancels the Apple Pay session before completing the payment.
+## Payment Types for Apple Pay
 
-**Testing Environment:**
-- Make sure enviroment is set to `sandbox` for testing purposes.
-- Enable debug mode by setting `debug: true` in the configuration to see detailed logs in the console.
-
-## Before going live
-- Ensure you have a valid merchant enabled "Apple Pay" payment method for live account.
-- Set the `env` to `production` in the configuration.
-- Set the `debug` to `false` in the configuration.
-- Make sure checkout token and request data are valid for production.
-- Test thoroughly in the sandbox environment before switching to production.
-
-
-## Methods
-
-- `init()` - Initialize Apple Pay
-
-## Payment Types
+> Make sure to pass the correct payment type ID in the `availablePaymentGateways` array in the configuration. and it is
+> enabled in your Hesabe account.
 
 - `MPGS_APPLE_PAY` (9) - MPGS Apple Pay
 - `CYBERSOURCE_APPLE_PAY` (10) - CyberSource Apple Pay
@@ -300,12 +266,22 @@ This callback is triggered when the user cancels the Apple Pay session before co
 - `KNET_INTERNATIONAL_APPLE_PAY` (13) - KNET International Apple Pay
 - `AMEX_APPLE_PAY` (14) - American Express Apple Pay
 
+## Testing Environment:
+
+- Use token and request data from the Hesabe sandbox environment.
+- Make sure enviroment is set to `sandbox` for testing purposes.
+- Enable debug mode by setting `debug: true` in the configuration to see detailed logs in the console.
+
+## Going Live
+
+- Ensure you have a valid merchant enabled "Apple Pay" payment method for live account.
+- Set the `env` to `production` in the configuration.
+- Set the `debug` to `false` in the configuration.
+- Make sure checkout token and request data are valid for production.
+- Test thoroughly in the sandbox environment before switching to production.
+
 ## Browser Support
 
 - Safari 11.1+
 - iOS Safari 11.3+
 - Other browsers with Apple Pay JS support
-
-## License
-
-MIT License - see LICENSE file for details.
