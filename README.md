@@ -89,8 +89,8 @@ payment.init();
 ```
 #### HTML : Design your Apple Pay button
 ```html
-<!--HTML Party-->
-<!-- Design your apple -->
+<!--HTML Part-->
+<!-- Design your apple button with attribute data-paymenttype -->
 <body>
    <div id="applePayButtonContainer">
       <button class="apple-pay-button" data-paymenttype="9">
@@ -104,16 +104,16 @@ payment.init();
 
 ## Configuration
 
-| Option                     | Type    | Required | Description                            |
-|----------------------------|---------|----------|----------------------------------------|
-| `token`                    | string  | ✓        | Authentication token                   |
-| `requestData`              | string  | ✓        | Encrypted payment data                 |
-| `amount`                   | string  | ✓        | Payment amount                         |
-| `availablePaymentGateways` | array   | ✓        | Available payment gateway IDs          |
-| `countryCode`              | string  |          | Country code. default 'KW'             |
-| `env`                      | string  | ✓        | Environment: 'sandbox' or 'production' |
-| `currencyCode`             | string  |          | Currency code. default 'KWD'           |
-| `debug`                    | boolean |          | Enable debug logging (default: false)  |
+| Option                     | Type    | Required | Description                                           |
+|----------------------------|---------|----------|-------------------------------------------------------|
+| `token`                    | string  | ✓        | Authentication token                                  |
+| `requestData`              | string  | ✓        | Encrypted payment data                                |
+| `amount`                   | string  | ✓        | Payment amount                                        |
+| `availablePaymentGateways` | array   | ✓        | Available payment gateway IDs,[Types](#payment-types) |
+| `countryCode`              | string  |          | Country code. default 'KW'                            |
+| `env`                      | string  | ✓        | Environment: 'sandbox' or 'production'                |
+| `currencyCode`             | string  |          | Currency code. default 'KWD'                          |
+| `debug`                    | boolean |          | Enable debug logging (default: false)                 |
 
 
 **Testing Environment:**
