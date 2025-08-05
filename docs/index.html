@@ -489,6 +489,49 @@
         </div>
     </div>
 
+    <!-- Code Snippet Card -->
+    <div class="card status-card">
+        <div class="card-header">
+            <h2>💻 Code Implementation</h2>
+        </div>
+        <div class="card-content">
+            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                Here's how to initialize HesabeApplePay with the current form values:
+            </p>
+            <div class="log-container">
+                <div class="log-header">
+                    📋 JavaScript Code Snippet
+                </div>
+                <pre id="codeSnippet" class="log-output" style="height: auto; min-height: 200px; background: #1e1e1e; color: #d4d4d4;">// Initialize HesabeApplePay with current form values
+const hesabeApplePay = new HesabeApplePay({
+    token: "84221717543726329673776485987",
+    requestData: "9e5a960de9a5c9abb43fad522fab51d1b872376116247e5123c7b804b95044ffb03a6b5073b35a6cdcfe37c895c07cb030900226dce6491874b18a9bc46ec54811240599497ceb687c62fe1e27f95da60327fea0645da5594dd705c8ac6b3d82",
+    amount: "10.000",
+    availablePaymentGateways: [9, 10, 11, 12, 13, 14],
+    countryCode: "KW",
+    currencyCode: "KWD",
+    env: "sandbox",
+    debug: true,
+    elements: {
+        applePayButtonContainer: 'applePayment',
+        applePayButtonQuerySelector: '.apple-pay-button'
+    }
+});
+
+// Initialize Apple Pay
+hesabeApplePay.init();</pre>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 16px;">
+                <button type="button" id="updateCodeBtn" class="btn btn-primary">
+                    🔄 Update Code Snippet
+                </button>
+                <button type="button" id="copyCodeBtn" class="btn btn-secondary">
+                    📋 Copy to Clipboard
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Status & Debug Card -->
     <div class="card status-card">
         <div class="card-header">
@@ -579,9 +622,7 @@
                     requestData: requestData,
                     amount: amount,
                     availablePaymentGateways: [9, 10, 11, 12, 13, 14],
-                    countryCode: 'KW',
                     env: env,
-                    currencyCode: 'KWD',
                     debug: true,
                     elements: {
                         applePayButtonContainer: 'applePayment',
@@ -650,6 +691,85 @@
         // Initially disable reset button
         resetButton.disabled = true;
         resetButton.style.opacity = '0.6';
+
+        // Code snippet functionality
+        const updateCodeBtn = document.getElementById('updateCodeBtn');
+        const copyCodeBtn = document.getElementById('copyCodeBtn');
+        const codeSnippet = document.getElementById('codeSnippet');
+
+        // Function to update code snippet with current form values
+        function updateCodeSnippet() {
+            const token = document.getElementById('token').value.trim();
+            const requestData = document.getElementById('requestData').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+            const env = document.getElementById('env').value;
+
+            const code = `// Initialize HesabeApplePay with current form values
+const hesabeApplePay = new HesabeApplePay({
+    token: "${token}",
+    requestData: "${requestData}",
+    amount: "${amount}",
+    availablePaymentGateways: [9, 10, 11, 12, 13, 14],
+    countryCode: "KW",
+    currencyCode: "KWD",
+    env: "${env}",
+    debug: true,
+    elements: {
+        applePayButtonContainer: 'applePayment',
+        applePayButtonQuerySelector: '.apple-pay-button'
+    }
+});
+
+// Initialize Apple Pay
+hesabeApplePay.init();`;
+
+            codeSnippet.textContent = code;
+        }
+
+        // Handle Update Code Snippet button click
+        updateCodeBtn.addEventListener('click', function() {
+            updateCodeSnippet();
+            
+            // Visual feedback
+            updateCodeBtn.innerHTML = '✅ Updated!';
+            setTimeout(() => {
+                updateCodeBtn.innerHTML = '🔄 Update Code Snippet';
+            }, 1500);
+        });
+
+        // Handle Copy to Clipboard button click
+        copyCodeBtn.addEventListener('click', async function() {
+            try {
+                await navigator.clipboard.writeText(codeSnippet.textContent);
+                
+                // Visual feedback
+                copyCodeBtn.innerHTML = '✅ Copied!';
+                setTimeout(() => {
+                    copyCodeBtn.innerHTML = '📋 Copy to Clipboard';
+                }, 1500);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = codeSnippet.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                copyCodeBtn.innerHTML = '✅ Copied!';
+                setTimeout(() => {
+                    copyCodeBtn.innerHTML = '📋 Copy to Clipboard';
+                }, 1500);
+            }
+        });
+
+        // Update code snippet when form values change
+        document.getElementById('token').addEventListener('input', updateCodeSnippet);
+        document.getElementById('requestData').addEventListener('input', updateCodeSnippet);
+        document.getElementById('amount').addEventListener('input', updateCodeSnippet);
+        document.getElementById('env').addEventListener('change', updateCodeSnippet);
     });
 </script>
 </body>
