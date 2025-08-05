@@ -45,10 +45,7 @@ The main `HesabeApplePay` class (`src/HesabeApplePay.js`) uses:
 2. Test locally using `test.html`
 3. Run `npm run build` to generate all distribution formats
 4. Use `npm run prepublishOnly` before publishing (cleans and rebuilds)
-
-## Testing
-
-The project includes `test.html` for manual testing. No automated test framework is currently configured.
+ 
 
 ## Payment Flow
 
@@ -58,8 +55,3 @@ The project includes `test.html` for manual testing. No automated test framework
 4. Setup payment buttons based on available gateways
 5. Handle payment authorization and redirect to Hesabe
 
-## Key Configuration Options
-
-Required fields: `token`, `requestData`, `amount`, `availablePaymentGateways`, `countryCode`, `env`, `currencyCode`
-
-Auto-configured fields: `merchantCode`, `sessionId`, `merchantIdentifier`, `baseUrl`

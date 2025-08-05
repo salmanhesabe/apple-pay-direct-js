@@ -55,7 +55,6 @@ class HesabeApplePay {
             requestData: '',
             availablePaymentGateways: [],
             elements: {
-                applePayButtonContainerId: 'applePayment',
                 applePayButtonQuerySelector: '.applePayBtn'
             },
             ...config
@@ -66,6 +65,13 @@ class HesabeApplePay {
             ? 'merchant.hesabe.prod'
             : 'merchant.hesabe.dec';
 
+        // Normalize availablePaymentGateways to ensure all values are integers
+        if (Array.isArray(baseConfig.availablePaymentGateways)) {
+            baseConfig.availablePaymentGateways = baseConfig.availablePaymentGateways.map(gateway => {
+                const parsed = parseInt(gateway, 10);
+                return isNaN(parsed) ? gateway : parsed;
+            });
+        }
 
         // Generate sessionId if not provided
         baseConfig.sessionId = baseConfig.sessionId || this.#generateSessionId();
@@ -250,13 +256,7 @@ class HesabeApplePay {
      * Setup Apple Pay button event listeners
      */
     #setupApplePayButtons() {
-        const applePayContainer = document.getElementById(this.#config.elements.applePayButtonContainerId);
-        if (!applePayContainer) {
-            this.#log('Apple Pay button container not found');
-            return;
-        }
 
-        applePayContainer.style.display = 'block';
 
         document.querySelectorAll(this.#config.elements.applePayButtonQuerySelector).forEach(button => {
             const paymentType = parseInt(button.dataset.paymenttype);
