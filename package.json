@@ -1,6 +1,6 @@
 {
   "name": "@hesabe-pay/direct-apple-pay",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Apple Pay integration library for Hesabe payment gateway",
   "main": "index.js",
   "module": "dist/hesabe-apple-pay.esm.js",
