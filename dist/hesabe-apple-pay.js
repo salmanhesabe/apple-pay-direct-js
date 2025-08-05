@@ -163,7 +163,7 @@ class HesabeApplePay {
 
     async #initializeApplePay() {
         try {
-            const canPay = await ApplePaySession.canMakePaymentsWithActiveCard(this.#config.merchantIdentifier) || await ApplePaySession.applePayCapabilities(this.#config.merchantIdentifier);
+            const canPay = await ApplePaySession.canMakePaymentsWithActiveCard(this.#config.merchantIdentifier);
             console.log(canPay);
             if (!canPay) {
                 this.#log('Apple Pay available in browser, but merchant not activated for domain');
