@@ -286,7 +286,7 @@
             const params = new URLSearchParams({
                 u: validationURL,
                 token: this.#internalConfig.token,
-                serviceId: new URLSearchParams(location.search).get('serviceTypeId') || '',
+                serviceId: 3,
                 payId: paymentType
             });
 
