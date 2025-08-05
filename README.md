@@ -28,38 +28,8 @@ npm i @hesabe-pay/direct-apple-pay
 4. Pass the Apple Pay button selector (eg: `.apple-pay-button`) `config.elements.applePayButtonQuerySelector`
 5. After all the required parameters are set, call the `init()` method to initialize Apple Pay.
 
-### ES Modules
 
-```javascript
-import HesabeApplePay from '@hesabe-pay/direct-apple-pay';
 
-const config = {
-    token: 'token',
-    requestData: 'encrypted-data',
-    amount: '10.00',
-    availablePaymentGateways: [9],
-    countryCode: 'KW',
-    env: 'sandbox',
-    currencyCode: 'KWD'
-}
-
-const payment = new HesabeApplePay(config);
-
-// Call init when it is ready check browser compatibility and show the buttons 
-payment.init();
-```
-#### HTML : Design your Apple Pay button
-```html
-<!--HTML Party-->
-<!-- Design your apple -->
-<body>
-   <div class="applePayButtonContainer">
-      <button class="apple-pay-button" data-paymenttype="9">
-         Apple Pay
-      </button>
-   </div>
-</body>
-```
 
 ### Browser (UMD)
 
@@ -68,7 +38,7 @@ payment.init();
    <script src="https://unpkg.com/@hesabe-pay/direct-apple-pay@latest/cdn/hesabe-apple-pay.min.js"></script>
 </head>
 <body>
-<div class="applePayButtonContainer">
+<div id="applePayButtonContainer">
    <button class="apple-pay-button" data-paymenttype="9">
       Apple Pay
    </button>
@@ -95,6 +65,42 @@ payment.init();
    payment.init();
 </script>
 ```
+
+
+### ES Modules
+
+```javascript
+import HesabeApplePay from '@hesabe-pay/direct-apple-pay';
+
+const config = {
+    token: 'token',
+    requestData: 'encrypted-data',
+    amount: '10.00',
+    availablePaymentGateways: [9],
+    countryCode: 'KW',
+    env: 'sandbox',
+    currencyCode: 'KWD'
+}
+
+const payment = new HesabeApplePay(config);
+
+// Call init when it is ready check browser compatibility and show the buttons 
+payment.init();
+```
+#### HTML : Design your Apple Pay button
+```html
+<!--HTML Party-->
+<!-- Design your apple -->
+<body>
+   <div id="applePayButtonContainer">
+      <button class="apple-pay-button" data-paymenttype="9">
+         Apple Pay
+      </button>
+   </div>
+</body>
+```
+
+
 
 ## Configuration
 
