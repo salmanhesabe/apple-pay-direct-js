@@ -106,10 +106,10 @@ class HesabeApplePay {
     #loadApplePaySDK() {
         return new Promise((resolve) => {
             // Check if Apple Pay SDK is already loaded
-            if (window.ApplePaySession) {
-                resolve();
-                return;
-            }
+            // if (window.ApplePaySession) {
+            //     resolve();
+            //     return;
+            // }
 
             // Check if script is already being loaded
             const existingScript = document.querySelector('script[src*="apple-pay-sdk.js"]');
