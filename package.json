@@ -14,9 +14,10 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "build:dev": "rollup -c --environment NODE_ENV:development",
-    "build:prod": "rollup -c --environment NODE_ENV:production",
+    "build": "rollup -c && node scripts/build-types.js",
+    "build:dev": "rollup -c --environment NODE_ENV:development && node scripts/build-types.js",
+    "build:prod": "rollup -c --environment NODE_ENV:production && node scripts/build-types.js",
+    "build:types": "node scripts/build-types.js",
     "clean": "rimraf dist cdn",
     "prepublishOnly": "npm run clean && npm run build",
     "publish": "npm publish"
