@@ -74,7 +74,7 @@ class HesabeApplePay {
     #generateSessionId() {
         const timestamp = Date.now();
         const random = Math.random().toString(36).substr(2, 9);
-        return `apple-direct-${timestamp}-${random}`;
+        return `${timestamp}${random}`;
     }
 
     #validateConfig() {
