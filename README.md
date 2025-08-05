@@ -79,6 +79,10 @@ const config = {
     availablePaymentGateways: [9],
     countryCode: 'KW',
     env: 'sandbox',
+    elements: {
+        applePayButtonContainerId: 'applePayButtonContainer',
+        applePayButtonQuerySelector: '.apple-pay-button'
+    },
     currencyCode: 'KWD'
 }
 
@@ -114,7 +118,21 @@ payment.init();
 | `env`                      | string  | ✓        | Environment: 'sandbox' or 'production'                |
 | `currencyCode`             | string  |          | Currency code. default 'KWD'                          |
 | `debug`                    | boolean |          | Enable debug logging (default: false)                 |
+| `elements`                 | object  |          | DOM element configuration for Apple Pay buttons       |
 
+### Elements Configuration
+
+The `elements` object configures how the library interacts with your DOM elements:
+
+```javascript
+elements: {
+    applePayButtonContainerId: 'applePayButtonContainer',  // ID of container element
+    applePayButtonQuerySelector: '.apple-pay-button'      // CSS selector for buttons
+}
+```
+
+- `applePayButtonContainerId`: The ID of the HTML element that contains your Apple Pay buttons
+- `applePayButtonQuerySelector`: CSS selector to find Apple Pay buttons within the container
 
 **Testing Environment:**
 - Make sure enviroment is set to `sandbox` for testing purposes.

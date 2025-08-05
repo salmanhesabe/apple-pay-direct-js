@@ -58,8 +58,3 @@ The project includes `test.html` for manual testing. No automated test framework
 4. Setup payment buttons based on available gateways
 5. Handle payment authorization and redirect to Hesabe
 
-## Key Configuration Options
-
-Required fields: `token`, `requestData`, `amount`, `availablePaymentGateways`, `countryCode`, `env`, `currencyCode`
-
-Auto-configured fields: `merchantCode`, `sessionId`, `merchantIdentifier`, `baseUrl`
