@@ -6,12 +6,15 @@
 class HesabeApplePay {
     static PAYMENT_TYPES = {
         MPGS_APPLE_PAY: 9,
-        CYBERSOURCE_APPLE_PAY: 11,
+        CYBERSOURCE_APPLE_PAY: 10,
+        KNET_DEBIT: 11,
         KNET_CREDIT: 12,
-        VISA: 10
+        KNET_INTERNATIONAL_APPLE_PAY: 13,
+        AMEX_APPLE_PAY: 14
     };
 
-    static APPLE_PAYMENT_METHOD_IDS = [9, 10, 11, 12, 13, 14];
+    static APPLE_PAYMENT_METHOD_IDS = [HesabeApplePay.PAYMENT_TYPES.MPGS_APPLE_PAY, HesabeApplePay.PAYMENT_TYPES.CYBERSOURCE_APPLE_PAY, HesabeApplePay.PAYMENT_TYPES.KNET_DEBIT, HesabeApplePay.PAYMENT_TYPES.KNET_CREDIT, HesabeApplePay.PAYMENT_TYPES.KNET_INTERNATIONAL_APPLE_PAY, HesabeApplePay.PAYMENT_TYPES.AMEX_APPLE_PAY];
+
     static AP_DEFAULT_CARD = {
         merchantCapabilities: ['supports3DS'],
         supportedNetworks: ['visa', 'masterCard']
