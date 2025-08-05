@@ -118,10 +118,10 @@
         #loadApplePaySDK() {
             return new Promise((resolve) => {
                 // Check if Apple Pay SDK is already loaded
-                // if (window.ApplePaySession) {
-                //     resolve();
-                //     return;
-                // }
+                if (window.ApplePaySession) {
+                    resolve();
+                    return;
+                }
 
                 // Check if script is already being loaded
                 const existingScript = document.querySelector('script[src*="apple-pay-sdk.js"]');
@@ -167,8 +167,8 @@
 
         async #initializeApplePay() {
             try {
-                const canPay = await ApplePaySession.applePayCapabilities(this.#config.merchantIdentifier);
-
+                const canPay = await ApplePaySession.canMakePaymentsWithActiveCard(this.#config.merchantIdentifier) || await ApplePaySession.applePayCapabilities(this.#config.merchantIdentifier);
+                console.log(canPay);
                 if (!canPay) {
                     this.#log('Apple Pay available in browser, but merchant not activated for domain');
                     return;
