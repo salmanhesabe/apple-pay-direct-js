@@ -95,9 +95,7 @@
                 requestData: 'Request data is required',
                 amount: 'Amount is required',
                 availablePaymentGateways: 'Available payment gateways are required',
-                countryCode: 'Country code is required',
-                env: 'Environment is required',
-                currencyCode: 'Currency code is required'
+                env: 'Environment is required'
             };
 
             for (const [field, message] of Object.entries(requiredFields)) {

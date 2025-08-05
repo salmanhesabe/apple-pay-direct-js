@@ -52,9 +52,9 @@ npm i @hesabe-pay/direct-apple-pay
       amount: '10.00',
       availablePaymentGateways: [9],
       countryCode: 'KW',
-      env: 'sandbox',
-      debug: false,
       currencyCode: 'KWD',
+      env: 'sandbox',
+      debug: true,
       elements: {
          applePayButtonContainerId: 'applePayButtonContainer',
          applePayButtonQuerySelector: '.apple-pay-button'
@@ -65,7 +65,7 @@ npm i @hesabe-pay/direct-apple-pay
    payment.init();
 </script>
 ```
-
+---
 
 ### ES Modules
 
@@ -99,7 +99,7 @@ payment.init();
    </div>
 </body>
 ```
-
+---
 
 
 ## Configuration
