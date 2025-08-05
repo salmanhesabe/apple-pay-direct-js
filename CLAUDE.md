@@ -45,10 +45,7 @@ The main `HesabeApplePay` class (`src/HesabeApplePay.js`) uses:
 2. Test locally using `test.html`
 3. Run `npm run build` to generate all distribution formats
 4. Use `npm run prepublishOnly` before publishing (cleans and rebuilds)
-
-## Testing
-
-The project includes `test.html` for manual testing. No automated test framework is currently configured.
+ 
 
 ## Payment Flow
 

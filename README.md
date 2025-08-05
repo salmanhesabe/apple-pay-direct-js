@@ -1,6 +1,6 @@
 # Hesabe Apple Pay
 
-A lightweight, modular Apple Pay integration library for the Hesabe payment gateway.
+A module for Apple Pay integration directly on merchant websites through the Hesabe payment gateway.
 
 ## Installation
 
