@@ -1,5 +1,5 @@
 {
-  "name": "hesabe-apple-pay",
+  "name": "@hesabe-pay/direct-apple-pay",
   "version": "1.0.0",
   "description": "Apple Pay integration library for Hesabe payment gateway",
   "main": "dist/hesabe-apple-pay.js",
@@ -17,7 +17,8 @@
     "build:dev": "rollup -c --environment NODE_ENV:development",
     "build:prod": "rollup -c --environment NODE_ENV:production",
     "clean": "rimraf dist cdn",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "publish": "npm publish"
   },
   "keywords": [
     "apple-pay",
@@ -32,7 +33,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/hesabe-apple-pay.git"
+    "url": "https://github.com/salmanhesabe/apple-pay-direct-js.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "type": "module",
   "devDependencies": {

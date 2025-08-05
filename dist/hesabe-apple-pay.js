@@ -55,7 +55,7 @@ class HesabeApplePay {
             requestData: '',
             availablePaymentGateways: [],
             elements: {
-                applePayButtonContainer: 'applePayment',
+                applePayButtonContainerId: 'applePayment',
                 applePayButtonQuerySelector: '.applePayBtn'
             },
             ...config
@@ -82,7 +82,7 @@ class HesabeApplePay {
     #generateSessionId() {
         const timestamp = Date.now();
         const random = Math.random().toString(36).substr(2, 9);
-        return `apple-direct-${timestamp}-${random}`;
+        return `${timestamp}${random}`;
     }
 
     #validateConfig() {
@@ -252,7 +252,7 @@ class HesabeApplePay {
      * Setup Apple Pay button event listeners
      */
     #setupApplePayButtons() {
-        const applePayContainer = document.getElementById(this.#config.elements.applePayButtonContainer);
+        const applePayContainer = document.getElementById(this.#config.elements.applePayButtonContainerId);
         if (!applePayContainer) {
             this.#log('Apple Pay button container not found');
             return;
