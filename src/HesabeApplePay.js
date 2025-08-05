@@ -58,6 +58,13 @@ class HesabeApplePay {
             ? 'merchant.hesabe.prod'
             : 'merchant.hesabe.dec';
 
+        // Normalize availablePaymentGateways to ensure all values are integers
+        if (Array.isArray(baseConfig.availablePaymentGateways)) {
+            baseConfig.availablePaymentGateways = baseConfig.availablePaymentGateways.map(gateway => {
+                const parsed = parseInt(gateway, 10);
+                return isNaN(parsed) ? gateway : parsed;
+            });
+        }
 
         // Generate sessionId if not provided
         baseConfig.sessionId = baseConfig.sessionId || this.#generateSessionId();
